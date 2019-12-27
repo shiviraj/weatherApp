@@ -1,8 +1,8 @@
-const { geoCode, displayData } = require('./src/weatherLib');
+const { getWeatherDetails } = require('./src/weatherLib');
 
 const main = () => {
-  const location = process.argv[2].trim();
-  geoCode(location, displayData);
+  const locations = process.argv.slice(2);
+  getWeatherDetails(locations);
 };
 
 main();

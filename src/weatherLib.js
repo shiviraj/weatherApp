@@ -31,4 +31,7 @@ const geoCode = (address, callback) => {
   request({ url, json: true }, requestOfGeoCode(callback));
 };
 
-module.exports = { geoCode, displayData };
+const getWeatherDetails = locations =>
+  locations.map(location => geoCode(location, displayData));
+
+module.exports = { getWeatherDetails };
