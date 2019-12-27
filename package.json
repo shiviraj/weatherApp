@@ -1,0 +1,16 @@
+{
+  "name": "weatherApp",
+  "version": "1.0.0",
+  "main": "weatherApp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "keywords": [],
+  "author": "Shivam Rajput",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "description": ""
+}
