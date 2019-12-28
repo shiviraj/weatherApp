@@ -1,35 +1,32 @@
-const getReport = data => {
-  let report = `\n  ===> ${data.location} <===\n-----------------------------------------\n`;
-  report += `\n${data.daily.data[0].summary}\nIt is currently ${data.currently.temperature}`;
-  report += ` degree temp.\n${data.daily.summary}\nThe probability of `;
-  return `${report}${data.currently.precipType} is ${data.currently.precipProbability}`;
+const getReport = ({ location, daily, currently }) => {
+  let report = `\n  ===> ${location} <===\n-----------------------------------------\n`;
+  report += `\n${daily.data[0].summary}\nIt is currently ${currently.temperature}`;
+  report += ` degree temp.\n${daily.summary}\nThe probability of `;
+  return `${report}${currently.precipType} is ${currently.precipProbability}`;
 };
 
 const requestOfForecast = (callback, location) => {
-  return (error, response) => {
+  return (error, { body }) => {
     if (error) {
-      callback('unable to connect the weather service', undefined);
-      return;
+      return callback('unable to connect the weather service', undefined);
     }
-    response.body.location = location;
-    callback(undefined, response.body);
+    body.location = location;
+    callback(undefined, body);
   };
 };
 
 const requestOfGeoCode = callback => {
-  return (error, data) => {
+  return (error, { body }) => {
     if (error) {
-      callback('unable to connect the location service', undefined);
-      return;
+      return callback('unable to connect the location service', undefined);
     }
-    if (data.body.features.length == 0) {
-      callback('unable to find the location. search another location');
-      return;
+    if (body.features.length == 0) {
+      return callback('unable to find the location. search another location');
     }
     callback(undefined, {
-      longitude: data.body.features[0].center[0],
-      latitude: data.body.features[0].center[1],
-      location: data.body.features[0].place_name
+      longitude: body.features[0].center[0],
+      latitude: body.features[0].center[1],
+      location: body.features[0].place_name
     });
   };
 };

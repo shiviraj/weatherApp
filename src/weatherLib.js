@@ -3,23 +3,21 @@ const { requestOfGeoCode, getReport, requestOfForecast } = require('./utils');
 
 const displayWeatherData = (error, data) => {
   if (error) {
-    console.log('Unable to connect to weather service');
-    return;
+    return console.log('Unable to connect to weather service');
   }
   console.log(getReport(data));
 };
 
-const getForecastDetails = (data, callback) => {
+const getForecastDetails = ({ location, longitude, latitude }, callback) => {
   const key = '893cb995b21d1bdf5c5bd0a05207792a';
   let url = `https://api.darksky.net/forecast/`;
-  url = `${url}${key}/${data.latitude},${data.longitude}?units=si`;
-  request({ url, json: true }, requestOfForecast(callback, data.location));
+  url = `${url}${key}/${latitude},${longitude}?units=si`;
+  request({ url, json: true }, requestOfForecast(callback, location));
 };
 
 const displayData = (error, data) => {
   if (error) {
-    console.error('Error:', error);
-    return;
+    return console.error('Error:', error);
   }
   getForecastDetails(data, displayWeatherData);
 };
