@@ -1,8 +1,7 @@
 const { getWeatherDetails } = require('./src/weatherLib');
 
 const main = () => {
-  const requiredAfter = 2;
-  const locations = process.argv.slice(requiredAfter);
+  const [, , ...locations] = process.argv;
   getWeatherDetails(locations);
 };
 
